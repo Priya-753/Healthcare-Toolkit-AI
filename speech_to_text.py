@@ -14,6 +14,7 @@ from deepgram import (
 )
 
 from datetime import datetime
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 CORS(app)
@@ -139,6 +140,30 @@ def get_transcript():
     print("Recieved transcript request")
     global transcript
     return jsonify({"transcript": transcript}), 200
+
+# New Endpoint to handle image uploads
+@app.route('/upload-image', methods=['POST'])
+def upload_image():
+    patient_id = request.form.get('patient_id')
+    if 'image' not in request.files:
+        return jsonify({"error": "No image file provided"}), 400
+
+    image = request.files['image']
+    if image.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    if patient_id:
+        # Create folder for the patient if it doesn't exist
+        patient_folder = f'./{patient_id}'
+        os.makedirs(patient_folder, exist_ok=True)
+
+        # Save the image with a secure filename
+        filename = secure_filename(image.filename)
+        image_path = os.path.join(patient_folder, filename)
+        image.save(image_path)
+        return jsonify({"message": f"Image uploaded successfully for patient {patient_id}"}), 200
+    else:
+        return jsonify({"error": "Patient ID is required"}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)

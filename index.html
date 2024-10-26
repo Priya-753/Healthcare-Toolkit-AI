@@ -15,6 +15,10 @@
     <h2>Current Transcript:</h2>
     <pre id="transcriptDisplay"></pre>
 
+    <h2>Upload Patient Image:</h2>
+    <input type="file" id="imageFile" accept="image/*">
+    <button onclick="uploadImage()">Upload Image</button>
+
     <script>
         async function startRecording() {
             const patientId = document.getElementById('patientId').value;
@@ -62,6 +66,32 @@
                 alert("Error fetching transcript. Check the console for details.");
             }
         }
+
+        async function uploadImage() {
+            const patientId = document.getElementById('patientId').value;
+            const imageFile = document.getElementById('imageFile').files[0];
+            if (!patientId || !imageFile) {
+                alert("Please enter a patient ID and select an image.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('patient_id', patientId);
+            formData.append('image', imageFile);
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/upload-image', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                alert(result.message || "Image uploaded successfully.");
+            } catch (error) {
+                console.error("Error uploading image:", error);
+                alert("Error uploading image. Check the console for details.");
+            }
+        }
+        
     </script>
 </body>
 </html>
