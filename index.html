@@ -28,7 +28,7 @@
             }
 
             try {
-                const response = await fetch('http://127.0.0.1:5000/start', {
+                const response = await fetch('http://127.0.0.1:5000/start-recording', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -45,7 +45,7 @@
 
         async function stopRecording() {
             try {
-                const response = await fetch('http://127.0.0.1:5000/stop', {
+                const response = await fetch('http://127.0.0.1:5000/stop-recording', {
                     method: 'POST'
                 });
                 const result = await response.json();
@@ -58,7 +58,7 @@
 
         async function getTranscript() {
             try {
-                const response = await fetch('http://127.0.0.1:5000/transcript');
+                const response = await fetch('http://127.0.0.1:5000/get-live-transcript');
                 const data = await response.json();
                 document.getElementById('transcriptDisplay').innerText = data.transcript || "No transcript available yet.";
             } catch (error) {
@@ -91,7 +91,7 @@
                 alert("Error uploading image. Check the console for details.");
             }
         }
-        
+
     </script>
 </body>
 </html>
