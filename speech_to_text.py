@@ -18,6 +18,7 @@ import requests
 from werkzeug.utils import secure_filename
 from generate_soap_notes import get_soap_notes
 from open_dental import get_appointments, get_patients, get_patient, get_appointments_patient
+from  summarize_xray import get_image_summarization
 
 app = Flask(__name__)
 CORS(app)
@@ -247,12 +248,28 @@ def upload_image():
         os.makedirs(patient_folder, exist_ok=True)
 
         # Save the image with a secure filename
-        filename = secure_filename(image.filename)
+        filename = "image.jpg"#secure_filename(image.filename)
         image_path = os.path.join(patient_folder, filename)
         image.save(image_path)
         return jsonify({"message": f"Image uploaded successfully for patient {patient_id}"}), 200
     else:
         return jsonify({"error": "Patient ID is required"}), 400
+    
+@app.route('/get-image-summary', methods=['GET'])
+def get_image_summary():
+    print("hi")
+    patient_id = request.args.get('patient_id')
+
+    if not patient_id:
+        return jsonify({"error": "patient_id and appointment_time are required"}), 400
+    
+    print(patient_id)
+    print(f'./{patient_id}/image.jpg')
+
+    # Call a function to process the transcript
+    processed_result = get_image_summarization(f'./{patient_id}/image.jpg')
+    
+    return jsonify({"message": processed_result}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
