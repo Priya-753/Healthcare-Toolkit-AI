@@ -49,6 +49,7 @@ def get_patient(patient_id):
     combined_data = ins
     combined_data.update(prov)
     combined_data.update(response)
+    combined_data["Allergies"] = get_allergies(patient_id)
     return combined_data
 
 def get_provider(clinic_number, provider_id):
@@ -69,3 +70,11 @@ def get_insurance(patient_id):
     }
     response = requests.get(url, headers=headers).json()
     return response[0]
+
+def get_allergies(patient_id):
+    url = f"https://api.opendental.com/api/v1/allergies?PatNum={patient_id}"
+    headers = {
+        "Authorization": auth_token,
+    }
+    response = requests.get(url, headers=headers).json()
+    return response
