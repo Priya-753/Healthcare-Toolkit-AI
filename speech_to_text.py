@@ -198,7 +198,7 @@ def appointments():
     if not start_date or not end_date:
         return jsonify({"error": "start_date and end_date are required"}), 400
 
-    return jsonify(get_appointments(start_date, end_date).json())
+    return jsonify(get_appointments(start_date, end_date))
 
 @app.route('/appointments-patient', methods=['GET'])
 def appointments_patient():
@@ -209,7 +209,7 @@ def appointments_patient():
     if not patient_id:
         return jsonify({"error": "patient_id is required"}), 400
 
-    return jsonify(get_appointments_patient(patient_id).json())
+    return jsonify(get_appointments_patient(patient_id))
 
 @app.route('/calls', methods=['GET'])
 def get_calls():
@@ -223,14 +223,14 @@ def get_calls():
 
 @app.route('/patients', methods=['GET'])
 def patients():
-    return jsonify(get_patients().json())
+    return jsonify(get_patients())
 
 @app.route('/one-patient', methods=['GET'])
 def one_patient():
     patient_id = request.args.get('patient_id')
     if not patient_id:
         return jsonify({"error": "patient_id required"}), 400
-    return jsonify(get_patient(patient_id).json())
+    return jsonify(get_patient(patient_id))
 
 @app.route('/upload-image', methods=['POST'])
 def upload_image():
