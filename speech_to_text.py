@@ -14,8 +14,10 @@ from deepgram import (
 )
 
 from datetime import datetime
+import requests
 from werkzeug.utils import secure_filename
 from generate_soap_notes import get_soap_notes
+from open_dental import get_appointments, get_patients, get_patient
 
 app = Flask(__name__)
 CORS(app)
@@ -184,6 +186,39 @@ def get_transcript_file():
     processed_result = get_soap_notes(patient_id, appointment_time, transcript_content)
     
     return jsonify({"message": processed_result}), 200
+
+@app.route('/appointments', methods=['GET'])
+def appointments():
+    # Get start_date and end_date from query parameters
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+
+    # Check if both parameters are provided
+    if not start_date or not end_date:
+        return jsonify({"error": "start_date and end_date are required"}), 400
+
+    return jsonify(get_appointments(start_date, end_date).json())
+
+@app.route('/calls', methods=['GET'])
+def get_calls():
+    url = "https://api.vapi.ai/call"
+    headers = {
+        "Authorization": f"Bearer 341df6d3-14d7-46fa-8fb1-76bad94a77b5"
+    }
+
+    response = requests.get(url, headers=headers, params={})
+    return jsonify(response.json())
+
+@app.route('/patients', methods=['GET'])
+def patients():
+    return jsonify(get_patients().json())
+
+@app.route('/one-patient', methods=['GET'])
+def one_patient():
+    patient_id = request.args.get('patient_id')
+    if not patient_id:
+        return jsonify({"error": "patient_id required"}), 400
+    return jsonify(get_patient(patient_id).json())
 
 @app.route('/upload-image', methods=['POST'])
 def upload_image():
