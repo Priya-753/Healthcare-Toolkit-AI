@@ -17,7 +17,7 @@ from datetime import datetime
 import requests
 from werkzeug.utils import secure_filename
 from generate_soap_notes import get_soap_notes
-from open_dental import get_appointments, get_patients, get_patient
+from open_dental import get_appointments, get_patients, get_patient, get_appointments_patient
 
 app = Flask(__name__)
 CORS(app)
@@ -198,6 +198,17 @@ def appointments():
         return jsonify({"error": "start_date and end_date are required"}), 400
 
     return jsonify(get_appointments(start_date, end_date).json())
+
+@app.route('/appointments-patient', methods=['GET'])
+def appointments_patient():
+    # Get start_date and end_date from query parameters
+    patient_id = request.args.get('patient_id')
+
+    # Check if both parameters are provided
+    if not patient_id:
+        return jsonify({"error": "patient_id is required"}), 400
+
+    return jsonify(get_appointments_patient(patient_id).json())
 
 @app.route('/calls', methods=['GET'])
 def get_calls():

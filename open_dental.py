@@ -13,6 +13,17 @@ def get_appointments(start_date, end_date):
     response = requests.get(url, headers=headers, params=params)
     return response
 
+def get_appointments_patient(pat_num):
+    url = "https://api.opendental.com/api/v1/appointments"
+    headers = {
+        "Authorization": auth_token,
+    }
+    params = {
+        "PatNum": pat_num, 
+    }
+    response = requests.get(url, headers=headers, params=params)
+    return response
+
 def get_patients():
     url = "https://api.opendental.com/api/v1/patients"
     headers = {
