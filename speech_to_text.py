@@ -1,9 +1,11 @@
 import os
 import time
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from threading import Thread
 from deepgram.utils import verboselogs
+import glob
+import os
 
 from deepgram import (
     DeepgramClient,
@@ -248,28 +250,35 @@ def upload_image():
         os.makedirs(patient_folder, exist_ok=True)
 
         # Save the image with a secure filename
-        filename = "image.jpg"#secure_filename(image.filename)
+        filename = secure_filename(image.filename)
         image_path = os.path.join(patient_folder, filename)
         image.save(image_path)
         return jsonify({"message": f"Image uploaded successfully for patient {patient_id}"}), 200
     else:
         return jsonify({"error": "Patient ID is required"}), 400
-    
+
+@app.route('/images/<patientid>/<filename>')
+def get_image(patientid, filename):
+    return send_from_directory(f'./{patientid}', filename)
+
+
 @app.route('/get-image-summary', methods=['GET'])
 def get_image_summary():
-    print("hi")
     patient_id = request.args.get('patient_id')
 
     if not patient_id:
         return jsonify({"error": "patient_id and appointment_time are required"}), 400
     
-    print(patient_id)
-    print(f'./{patient_id}/image.jpg')
-
-    # Call a function to process the transcript
-    processed_result = get_image_summarization(f'./{patient_id}/image.jpg')
+    jpg_files = glob.glob(os.path.join(f'./{patient_id}/', "*.jpg"))
+    summary = []
+    url = []
+    # Print list of jpg files
+    for jpg_file in jpg_files:
+        processed_result = get_image_summarization(jpg_file)
+        summary.append(processed_result)
+        url.append(f'/images/{patient_id}/{jpg_file.split('\\')[-1]}')
     
-    return jsonify({"message": processed_result}), 200
+    return jsonify({"image_url": url, "summary": summary}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
