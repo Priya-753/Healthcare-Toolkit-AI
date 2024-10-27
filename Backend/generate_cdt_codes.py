@@ -19,7 +19,7 @@ def get_cdt_icd_codes(transcript, soap):
         "content": [
             {
             "type": "text",
-            "text": f"""you're an expert in diagnosing ICD and CDT codes from given SOAP notes and transcripts. given a transcript and SOAP notes for a dental appointment, you will generate ICD and CDT codes. you will also keep in mind to mention the quadrant, teeth type(molar, premolar, canine), teeth number since all of this data is required in the next step of where your output will be used which is to generate pre-authorisation and insurance claims. response will be in the following format - "procAndBillingCodes": {{<array of ICD diagnosis and corresponding CDT procedure where both will be objects like icd: <icdObject>, cdt: <cdtObject>>}}
+            "text": f"""you're an expert in diagnosing ICD and CDT codes from given SOAP notes and transcripts. given a transcript and SOAP notes for a dental appointment, you will generate ICD and CDT codes. you will also keep in mind to mention the quadrant, teeth type(molar, premolar, canine), teeth number since all of this data is required in the next step of where your output will be used which is to generate pre-authorisation and insurance claims. response will be in the following json format - {{"procAndBillingCodes": {{<array of ICD diagnosis and corresponding CDT procedure where both will be objects like icd: <icdObject>, cdt: <cdtObject>>}} }}
         An object of CDT code will contain the following schema: {{codeNumber: <codeNumber>, teethNumber: <teethNumber if needed otherwise null>, quadrant: <quadrant if needed otherwise null>, teethType:  <teethType if needed otherwise null>, description: <description if needed otherwise null>}}
         An object of ICD code will contain the following schema: {{codeNumber: <codeNumber>, description: <description>}}
 
@@ -33,7 +33,7 @@ def get_cdt_icd_codes(transcript, soap):
         }
     ],
     )
-    return(ast.literal_eval("{" + response.choices[0].message.content[7:-4] + "}"))
+    return(ast.literal_eval(response.choices[0].message.content[7:-4]))
 
 transcript = """Speaker 0 (Dentist): Hi! What can I help you with today?
 Speaker 1 (Patient): Hi, Doctor. I’ve been feeling some sensitivity on both sides of my mouth, mostly when I eat sweets.
