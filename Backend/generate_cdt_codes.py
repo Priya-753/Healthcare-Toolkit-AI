@@ -2,6 +2,7 @@ import base64
 from openai import OpenAI
 import os
 import ast
+import json
 
 # Set your OpenAI API key
 api_key = 'sk-W1I2vqmJwzDiz_3DHwGvDxpP3RiV0mYLg3qB553OdjT3BlbkFJbXMsqTYHYHkZY7la3Cu18vcHTtdmWwvMoJHm-ChQ0A'
@@ -33,7 +34,7 @@ def get_cdt_icd_codes(transcript, soap):
         }
     ],
     )
-    return(ast.literal_eval(response.choices[0].message.content[7:-4]))
+    return(json.loads(response.choices[0].message.content[7:-4]))
 
 transcript = """Speaker 0 (Dentist): Hi! What can I help you with today?
 Speaker 1 (Patient): Hi, Doctor. I’ve been feeling some sensitivity on both sides of my mouth, mostly when I eat sweets.
