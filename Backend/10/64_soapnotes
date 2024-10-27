@@ -1,0 +1,8 @@
+```json
+{
+  "subjective": "The patient reports a dull ache on the left side of their mouth, particularly towards the back, which worsens while chewing. They also mention occasional jaw tension upon waking.",
+  "objective": "Panoramic X-ray reveals an impacted lower left wisdom tooth pressing against the adjacent molar.  A small cavity is observed on the lower right second molar.  Additionally, there is evidence of enamel wear on the back molars and slight bone loss around several teeth.  Older fillings on the upper left side appear stable.",
+  "assessment": "1. Impacted lower left wisdom tooth likely causing pain and posing a risk for infection/damage to the neighboring tooth. \n2. Early-stage cavity on the lower right second molar. \n3. Enamel wear on the back molars suggestive of bruxism. \n4. Early signs of gum disease indicated by slight bone loss. \n5. Stable older fillings on the upper left side to be monitored.",
+  "plan": "1. Referral to an oral surgeon for evaluation and potential extraction of the impacted lower left wisdom tooth. \n2. Placement of a composite filling in the lower right second molar to address the early-stage cavity. \n3. Recommendation for a night guard to manage bruxism and prevent further enamel wear. \n4. Emphasize the importance of regular six-month cleanings to maintain gum health and prevent further bone loss. \n5. Continued monitoring of older fillings at future checkups."
+}
+``` 

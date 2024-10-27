@@ -362,9 +362,11 @@ def get_image_summary():
             with open(f, 'w') as file:  # Use 'w' mode to write text files
                 file.write(processed_result)
         summary.append(processed_result)
-        url.append(f'/images/{patient_id}/{jpg_file.split('\\')[-1]}')
+        # url.append(f'/images/{patient_id}/{jpg_file.split('\\')[-1]}')
+        url.append(f'/images/{patient_id}/{jpg_file.split('/')[-1]}')
     
     return jsonify({"image_url": url, "summary": summary}), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=8888, debug=True)
