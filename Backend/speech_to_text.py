@@ -335,14 +335,11 @@ def fill_claim():
     else:
         return jsonify({"error": "Patient ID and appointment time is required"}), 400
 
-@app.route('/download-pdf', methods=['POST'])
-def download_transcript():
-    patient_id = request.form.get('patient_id')
-    appointment_time = request.form.get('appointment_time')
-
-    if patient_id and appointment_time:
+@app.route('/download-pdf/<patientid>/<appointmentid>', methods=['GET'])
+def download_transcript(patientid, appointmentid):
+    if patientid and appointmentid:
         # Create folder for the patient if it doesn't exist
-        file_path = f'./{patient_id}/transcript_{appointment_time}'
+        file_path = f'./{patientid}/transcript_{appointmentid}.txt'
         return send_file(file_path)
     else:
         return jsonify({"error": "Patient ID and appointment time is required"}), 400
