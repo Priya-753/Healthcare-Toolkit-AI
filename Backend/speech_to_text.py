@@ -347,7 +347,7 @@ def get_image_summary():
     if not patient_id:
         return jsonify({"error": "patient_id and appointment_time are required"}), 400
     
-    jpg_files = glob.glob(os.path.join(f'./{patient_id}/', "*.jpg"))
+    jpg_files = glob.glob(os.path.join(f'./{patient_id}/', "*.JPG"))
     summary = []
     url = []
     # Print list of jpg files
