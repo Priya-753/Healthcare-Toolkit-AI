@@ -55,4 +55,4 @@ Tooth #15 (upper left second molar): Small carious lesion on the interproximal s
 Tooth #31 (lower right first molar): Small carious lesion.
 All lesions appear to be confined to the enamel and have not reached the dentin or pulp.
 Assessment: Dental caries affecting teeth #14, #15, and #31. The patient's sensitivity is likely due to the exposed dentin resulting from the carious lesions."""
-print(get_cdt_icd_codes(transcript, soap))
+# print(get_cdt_icd_codes(transcript, soap))

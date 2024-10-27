@@ -20,7 +20,7 @@ import requests
 from werkzeug.utils import secure_filename
 from generate_soap_notes import get_soap_notes
 from open_dental import get_appointments, get_patients, get_patient, get_appointments_patient
-from  summarize_xray import get_image_summarization
+from summarize_xray import get_image_summarization
 from generate_cdt_codes import get_cdt_icd_codes
 from pdf_fill import fill_form
 
