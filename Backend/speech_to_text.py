@@ -23,6 +23,7 @@ from open_dental import get_appointments, get_patients, get_patient, get_appoint
 from summarize_xray import get_image_summarization
 from generate_cdt_codes import get_cdt_icd_codes
 from pdf_fill import fill_form
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -212,7 +213,7 @@ def get_cdt_file():
     ff = f"./{patient_id}/{appointment_time}_cdtcodes"
     if os.path.exists(ff):
         with open(ff, 'r') as file:
-            codes = ' '.join(file.readlines())
+            codes = json.load(ff)
             return jsonify({"message": codes}), 200
     
     fname = f"./{patient_id}/{appointment_time}_soapnotes"
@@ -230,7 +231,7 @@ def get_cdt_file():
     # Call a function to process the transcript
     codes = get_cdt_icd_codes(transcript_content, soapnotes)
     with open(ff, 'w') as file:  # Use 'w' mode to write text files
-            file.write(codes)
+            json.dump(codes, file)
     
     return jsonify({"message": codes}), 200
 
