@@ -1,6 +1,6 @@
 import os
 import time
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, send_file
 from flask_cors import CORS
 from threading import Thread
 from deepgram.utils import verboselogs
@@ -21,6 +21,8 @@ from werkzeug.utils import secure_filename
 from generate_soap_notes import get_soap_notes
 from open_dental import get_appointments, get_patients, get_patient, get_appointments_patient
 from  summarize_xray import get_image_summarization
+from generate_cdt_codes import get_cdt_icd_codes
+from pdf_fill import fill_form
 
 app = Flask(__name__)
 CORS(app)
@@ -178,6 +180,12 @@ def get_transcript_file():
 
     if not patient_id or not appointment_time:
         return jsonify({"error": "patient_id and appointment_time are required"}), 400
+    
+    fname = f"./{patient_id}/{appointment_time}_soapnotes"
+    if os.path.exists(fname):
+        with open(fname, 'r') as file:
+            processed_result = ' '.join(file.readlines())
+            return jsonify({"message": processed_result}), 200
 
     # Read the transcript content
     transcript_content = read_transcript(patient_id, appointment_time)
@@ -187,8 +195,44 @@ def get_transcript_file():
 
     # Call a function to process the transcript
     processed_result = get_soap_notes(patient_id, appointment_time, transcript_content)
+    with open(fname, 'w') as file:  # Use 'w' mode to write text files
+            file.write(processed_result)
     
     return jsonify({"message": processed_result}), 200
+
+@app.route('/get-cdt-codes', methods=['POST'])
+def get_cdt_file():
+    data = request.json
+    patient_id = data.get('patient_id')
+    appointment_time = data.get('appointment_time')
+
+    if not patient_id or not appointment_time:
+        return jsonify({"error": "patient_id and appointment_time are required"}), 400
+    
+    ff = f"./{patient_id}/{appointment_time}_cdtcodes"
+    if os.path.exists(ff):
+        with open(ff, 'r') as file:
+            codes = ' '.join(file.readlines())
+            return jsonify({"message": codes}), 200
+    
+    fname = f"./{patient_id}/{appointment_time}_soapnotes"
+    soapnotes = None
+    if os.path.exists(fname):
+        with open(fname, 'r') as file:
+            soapnotes = ' '.join(file.readlines())
+
+    # Read the transcript content
+    transcript_content = read_transcript(patient_id, appointment_time)
+    
+    if transcript_content is None or soapnotes is None:
+        return jsonify({"error": "Transcript or soapnotes file not found"}), 404
+
+    # Call a function to process the transcript
+    codes = get_cdt_icd_codes(transcript_content, soapnotes)
+    with open(ff, 'w') as file:  # Use 'w' mode to write text files
+            file.write(codes)
+    
+    return jsonify({"message": codes}), 200
 
 @app.route('/appointments', methods=['GET'])
 def appointments():
@@ -257,6 +301,40 @@ def upload_image():
     else:
         return jsonify({"error": "Patient ID is required"}), 400
 
+@app.route('/fill-claim-form', methods=['POST'])
+def fill_claim():
+    patient_id = request.form.get('patient_id')
+    appointment_time = request.form.get('appointment_time')
+    if 'pdf' not in request.files:
+        return jsonify({"error": "No pdf file provided"}), 400
+
+    pdf = request.files['pdf']
+    if pdf.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    if patient_id and appointment_time:
+        # Create folder for the patient if it doesn't exist
+        patient_folder = f'./{patient_id}'
+        os.makedirs(patient_folder, exist_ok=True)
+
+        # Save the image with a secure filename
+        filename = secure_filename(pdf.filename)
+        pdf_path = os.path.join(patient_folder, filename)
+        pdf_output_path = pdf_path.split('.')[0] + '_output' + pdf_path.split('.')[1]
+        pdf.save(pdf_path)
+
+        ff = f"./{patient_id}/{appointment_time}_cdtcodes"
+        if os.path.exists(ff):
+            with open(ff, 'r') as file:
+                codes = ' '.join(file.readlines())
+
+        transcript_content = read_transcript(patient_id, appointment_time)
+        fill_form(pdf_path, pdf_output_path, transcript_content, str(get_patient(patient_id)), codes)
+        return send_file(pdf_output_path)
+    else:
+        return jsonify({"error": "Patient ID and appointment time is required"}), 400
+
+
 @app.route('/images/<patientid>/<filename>')
 def get_image(patientid, filename):
     return send_from_directory(f'./{patientid}', filename)
@@ -274,7 +352,15 @@ def get_image_summary():
     url = []
     # Print list of jpg files
     for jpg_file in jpg_files:
-        processed_result = get_image_summarization(jpg_file)
+        f = jpg_file + "_summary.txt"
+        print(f)
+        if os.path.exists(f):
+            with open(f, 'r') as file:  # Use 'rb' mode for binary files like PDFs
+                processed_result = ' '.join(file.readlines())
+        else:
+            processed_result = get_image_summarization(jpg_file)
+            with open(f, 'w') as file:  # Use 'w' mode to write text files
+                file.write(processed_result)
         summary.append(processed_result)
         url.append(f'/images/{patient_id}/{jpg_file.split('\\')[-1]}')
     

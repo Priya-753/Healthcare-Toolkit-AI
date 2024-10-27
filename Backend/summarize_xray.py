@@ -25,7 +25,7 @@ def get_image_summarization(image_path):
         "content": [
             {
             "type": "text",
-            "text": """Can you give a dental overview of this image? Similar to This is a panoramic dental X-ray (OPG), providing a comprehensive view of the entire mouth, including the teeth, jaws, and surrounding structures. Here’s an overview of key observations based on what is visible:
+            "text": """Can you give a dental overview of this image in 100 words? Similar to This is a panoramic dental X-ray (OPG), providing a comprehensive view of the entire mouth, including the teeth, jaws, and surrounding structures. Here’s an overview of key observations based on what is visible:
 
     1. Restorations and Fillings:
     Several teeth on both the upper and lower arches have visible dental fillings or crowns (appearing as bright white areas).
