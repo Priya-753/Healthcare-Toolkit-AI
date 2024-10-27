@@ -78,3 +78,42 @@ def get_allergies(patient_id):
     }
     response = requests.get(url, headers=headers).json()
     return response
+
+def populate_appointment():
+    # Define API endpoint
+    url = 'https://api.opendental.com/api/v1/appointments'  # Replace with the actual API URL
+    headers = {
+            "Authorization": auth_token,
+        }
+
+    # Prepare appointment data
+    appointment_data = {
+        "PatNum": 11,
+        "Op": 1,  # Replace with the actual Op value
+        "AptDateTime": "2024-10-26 16:00:00",
+        "AptStatus": "Scheduled",  # Optional
+        "Pattern": "/XX/",  # Optional
+        # "Confirmed": 1,  # Replace with appropriate definition.DefNum
+        "Note": "",  # Optional
+        "ProvNum": 1,  # Replace with the actual provider number or leave it empty for defaults
+        "ProvHyg": 0,  # Optional
+        "ClinicNum": 0,  # Replace with actual clinic number
+        "IsHygiene": "false",  # Optional
+        "IsNewPatient": "false",  # Optional
+        "Priority": "Normal",  # Optional
+        "AppointmentTypeNum": 0,  # Optional
+        "colorOverride": "0,0,0",  # Optional
+        "PatternSecondary": ""  # Optional
+    }
+
+    # # Send POST request
+    response = requests.post(url, headers=headers, json=appointment_data)
+
+    # Check response status
+    if response.status_code == 201:  # Created
+        print("Appointment created successfully.")
+        print("Response:", response.json())
+    else:
+        print("Failed to create appointment.")
+        print("Status Code:", response.status_code)
+        print("Response:", response.text)

@@ -143,7 +143,7 @@ def start_recording():
     if not patient_id:
         return jsonify({"error": "patient_id is required"}), 400
     if not appointment_time:
-        appointment_time = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')  # Format current time
+        appointment_time = datetime.now().strftime('%Y-%m-%d')  # Format current time
     
     # Clear previous transcript
     transcript = ""
