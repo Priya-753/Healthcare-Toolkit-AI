@@ -213,8 +213,8 @@ def get_cdt_file():
     ff = f"./{patient_id}/{appointment_time}_cdtcodes"
     if os.path.exists(ff):
         with open(ff, 'r') as file:
-            codes = json.load(ff)
-            return jsonify({"message": codes}), 200
+            codes = json.load(file)
+            return jsonify(codes), 200
     
     fname = f"./{patient_id}/{appointment_time}_soapnotes"
     soapnotes = None
@@ -233,7 +233,7 @@ def get_cdt_file():
     with open(ff, 'w') as file:  # Use 'w' mode to write text files
             json.dump(codes, file)
     
-    return jsonify({"message": codes}), 200
+    return jsonify(codes), 200
 
 @app.route('/appointments', methods=['GET'])
 def appointments():
