@@ -88,9 +88,9 @@ def populate_appointment():
 
     # Prepare appointment data
     appointment_data = {
-        "PatNum": 11,
+        "PatNum": 9,
         "Op": 1,  # Replace with the actual Op value
-        "AptDateTime": "2024-10-26 16:00:00",
+        "AptDateTime": "2024-10-24 17:00:00",
         "AptStatus": "Scheduled",  # Optional
         "Pattern": "/XX/",  # Optional
         # "Confirmed": 1,  # Replace with appropriate definition.DefNum
@@ -117,3 +117,5 @@ def populate_appointment():
         print("Failed to create appointment.")
         print("Status Code:", response.status_code)
         print("Response:", response.text)
+
+# populate_appointment()

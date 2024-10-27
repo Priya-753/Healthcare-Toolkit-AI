@@ -192,7 +192,7 @@ def get_transcript_file():
     transcript_content = read_transcript(patient_id, appointment_time)
     
     if transcript_content is None:
-        return jsonify({"error": "Transcript file not found"}), 404
+        return jsonify({"message": ""}), 200
 
     # Call a function to process the transcript
     processed_result = get_soap_notes(patient_id, appointment_time, transcript_content)
@@ -226,7 +226,7 @@ def get_cdt_file():
     transcript_content = read_transcript(patient_id, appointment_time)
     
     if transcript_content is None or soapnotes is None:
-        return jsonify({"error": "Transcript or soapnotes file not found"}), 404
+        return jsonify({"message": ""}), 200
 
     # Call a function to process the transcript
     codes = get_cdt_icd_codes(transcript_content, soapnotes)
@@ -319,18 +319,33 @@ def fill_claim():
         os.makedirs(patient_folder, exist_ok=True)
 
         # Save the image with a secure filename
-        filename = secure_filename(pdf.filename)
+        filename = "form.pdf"#secure_filename(pdf.filename)
         pdf_path = os.path.join(patient_folder, filename)
-        pdf_output_path = pdf_path.split('.')[0] + '_output' + pdf_path.split('.')[1]
+        pdf_output_path = "." + pdf_path.split('.')[1] + '_output.' + pdf_path.split('.')[2]
+        print(pdf_output_path)
         pdf.save(pdf_path)
 
         ff = f"./{patient_id}/{appointment_time}_cdtcodes"
         if os.path.exists(ff):
             with open(ff, 'r') as file:
                 codes = ' '.join(file.readlines())
+        
+        ff = f"./{patient_id}/{appointment_time}_soapnotes"
+        if os.path.exists(ff):
+            with open(ff, 'r') as file:
+                soapnotes = ' '.join(file.readlines())
+
+        jpg_files = glob.glob(os.path.join(f'./{patient_id}/', "*.JPG"))
+        summary = []
+        # Print list of jpg files
+        for jpg_file in jpg_files:
+            f = jpg_file + "_summary.txt"
+            with open(f, 'r') as file:  # Use 'rb' mode for binary files like PDFs
+                processed_result = ' '.join(file.readlines())
+                summary.append(processed_result)
 
         transcript_content = read_transcript(patient_id, appointment_time)
-        fill_form(pdf_path, pdf_output_path, transcript_content, str(get_patient(patient_id)), codes)
+        fill_form(pdf_path, pdf_output_path, transcript_content, str(get_patient(patient_id)), codes, soapnotes, str(summary))
         return send_file(pdf_output_path)
     else:
         return jsonify({"error": "Patient ID and appointment time is required"}), 400
@@ -340,6 +355,15 @@ def download_transcript(patientid, appointmentid):
     if patientid and appointmentid:
         # Create folder for the patient if it doesn't exist
         file_path = f'./{patientid}/transcript_{appointmentid}.txt'
+        return send_file(file_path)
+    else:
+        return jsonify({"error": "Patient ID and appointment time is required"}), 400
+
+@app.route('/download-form/<patientid>', methods=['GET'])
+def download_form(patientid):
+    if patientid:
+        # Create folder for the patient if it doesn't exist
+        file_path = f'./{patientid}/form_output.pdf'
         return send_file(file_path)
     else:
         return jsonify({"error": "Patient ID and appointment time is required"}), 400
@@ -372,8 +396,8 @@ def get_image_summary():
             with open(f, 'w') as file:  # Use 'w' mode to write text files
                 file.write(processed_result)
         summary.append(processed_result)
-        # url.append(f'/images/{patient_id}/{jpg_file.split('\\')[-1]}')
-        url.append(f'/images/{patient_id}/{jpg_file.split('/')[-1]}')
+        url.append(f'/images/{patient_id}/{jpg_file.split('\\')[-1]}')
+        # url.append(f'/images/{patient_id}/{jpg_file.split('/')[-1]}')
     
     return jsonify({"image_url": url, "summary": summary}), 200
 

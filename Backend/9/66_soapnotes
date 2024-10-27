@@ -1,0 +1,8 @@
+```json
+{
+  "subjective": "The patient reports discomfort on the right side of their mouth, particularly when chewing, which has worsened recently.  They mention having older fillings and dental work.",
+  "objective": "Panoramic x-ray reveals areas of dental decay and bone loss, potentially impacting tooth stability. Older fillings and dental work are also present.",
+  "assessment": "Dental decay and bone loss are evident, likely contributing to the patient's discomfort and potentially jeopardizing tooth stability. The presence of older dental work warrants further evaluation for potential replacement.",
+  "plan": "- Address the dental decay and damage to prevent further bone loss, considering fillings or crowns to protect the teeth.\n- For areas with significant bone loss, explore a bone graft to restore bone density and improve tooth stability. Discuss the recovery time, which typically involves a few months for graft integration, monitoring progress with follow-up x-rays and checkups, and managing discomfort with medication.\n- Closely monitor gum health, as inflammation can exacerbate bone loss. Implement regular cleanings and consider periodontal treatments if necessary.\n- Evaluate the older fillings for wear and replace them as needed to prevent future issues.\n- Schedule a thorough cleaning as the initial step, followed by addressing fillings or other groundwork. Subsequently, discuss the bone graft procedure in detail with the patient, including timeline and specifics, with assistance from the dental assistant."
+}
+```
