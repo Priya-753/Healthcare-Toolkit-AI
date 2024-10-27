@@ -212,122 +212,51 @@ data_new = {
 }
 
 data_new2 = {
-    '1 Patient Name': 'Allen Allowed',
-    '2 Birthdate': '1980-06-05',
-    '9 City State Zip': 'Forbes, CT 21598',
-    '19 Dentist Name': 'DOC1',  # Extracted from priProvAbbr
-    '23 Date Treatment Series Began': '2024-08-29', # Today's date as a proxy
-    'Tooth  or letterFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY': '19', # Lower left molar, common numbering
-    'Surfaces or QuadFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY': '1', #  1 surface filling mentioned
-    'DESCRIPTION OF SERVICE Including XRays Prophylaxis Materials Used etcFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY': 'Local Anesthesia, Intraoral Periapical Radiographic Image, Resin-Based Composite Filling (Posterior)',
-    'Date Service PerformedFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY': '2024-08-29', # Today's date as a proxy
-    'Procedure NumberFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY': 'D9215', # Local Anesthesia
-    'FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY': '30.00',
-    'AllowanceFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY': None,
-    'Tooth  or letterFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2': '19',  # Lower Left Molar
-    'Surfaces or QuadFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2': '1', # From transcript - 1 surface filling
-    'DESCRIPTION OF SERVICE Including XRays Prophylaxis Materials Used etcFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2': 'Intraoral Periapical First Radiographic Image',
-    'Date Service PerformedFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2': '2024-08-29', # Today's date as a proxy
-    'Procedure NumberFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2': 'D0220',
-    'FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3': '45.00', # Use Fee 3 and 5 etc. alternating
-    'AllowanceFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2': None,
-     'Tooth  or letterFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3': '19', # Lower Left Molar
-    'Surfaces or QuadFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3': '1', # From transcript - 1 surface filling
-    'DESCRIPTION OF SERVICE Including XRays Prophylaxis Materials Used etcFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3': 'Resin-Based Composite Filling (1 Surface, Posterior)',
-    'Date Service PerformedFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3': '2024-08-29', # Today's date as a proxy
-    'Procedure NumberFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3': 'D2391', # Filling Code
-    'FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_5': '200.00',
-    'AllowanceFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3': None,
-    'Total Fee Charged': '275.00', # Sum of procedures D9215, D0220, and D2391
-    'DENTISTS PRETREATMENT ESTIMATE OF CHARGES': '275.00', # Same as Total Fee Charged
-    'DENTISTS STATEMENT OF ACTUAL CHARGES': '275.00', #  Same as Total Fee Charged, assumes no changes. 
-    'XRAYS OR MODELS ENCLOSED HOW MANY': '1', # One x-ray mentioned
-
-
-    #All other fields are null as there is no information available in the given text.
-    '3 Relation to Subscriber': None,
-    'School': None,
-    'School City': None,
-    'School State': None,
-    '5 Subscribers Name': None,
-    '6 Subscribers ID Number': None,
-    'Dual Coverage Yes': None, 
-    'Dual Coverage No': None, 
-    'Date': None,
-    '7 Subscribers Mailing Address': None,
-    '8 Subscribers Phone': None,
-    '15 ID Number': None,
-    'Check': None,  
-    '16 Union Local': None,
-    '13 Policy Number': None,
-    'Date_2': None, 
-    '10 Employer Name': None,
-    '11 GroupPlan Number': None,
-    '17 Name and Address of Other Insurance': None,
-    "12 Spouse's Name": None,
-    '13 Spouses Employer': None, 
-    'Signature of above insured': None,
-    'Facility No': None,
-    'Initial Placement No': None,
-    '20 Dentists Address': None,
-    'If no reason for replacement': None,
-    '21 City State Zip': None,
-    '25 Date of prior placement': None,
-    'Treatment result of accident Yes': None,
-    'Treatment result of accident No': None,
-    'Tax ID to be used for Tax reporting': None,
-    'License No': None, 
-    '22 Phone': None,
-    'Result of occupational injury Yes': None, 
-    'Result of occupational injury No': None,
-    'Orthodontic purposes Yes': None,
-    'Orthodontic purposes No': None,
-    '29 IF FOR ORTHODONTIC REASONS': None, 
-    'Initial Treatment Date': None, 
-    'Total Fee': None,
-    'Down Payment': None,
-    'Date_3': None, 
-    'Monthly Payment Amt': None,
-    'Number of Months': None,
-    'Date of First Billing': None,
-    'Retainer Fee': None,
-
-
-    'FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2': None,
-    'Tooth  or letterFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_4': None,
-    'Surfaces or QuadFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_4': None,
-    'DESCRIPTION OF SERVICE Including XRays Prophylaxis Materials Used etcFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_4': None,
-    'Date Service PerformedFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_4': None,
-    'Procedure NumberFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_4': None,
-    'FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_7': None,
-    'FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_8': None,
-    'AllowanceFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_4': None,
-    'Tooth  or letterFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_5': None,
-    'Surfaces or QuadFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_5': None,
-    'DESCRIPTION OF SERVICE Including XRays Prophylaxis Materials Used etcFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_5': None,
-    'Date Service PerformedFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_5': None,
-    'Procedure NumberFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_5': None,
-    'FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_9': None,
-
-    # ...  (All remaining _4 to _15 fields are also None)
-
-    'AllowanceTotal Fee Charged': None,
-    'CoInsurance': None, 
-    'fill_151': None,
-    "Subscriber's Signature": None,
-    'Date 4': None,
-    'Insurance Pays': None,
-    "Dentist's Signature": None,
-    'Date 5': None,
-    'Patient Pays': None,
-    'RESUBMITTAL': None,
-    'undefined': None,
-    'FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_4': None,
-    'FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_6': None
-
-
-
+    "1 Patient Name": "Allen Allowed",
+    "2 Birthdate": "1980-06-05",
+    "10 Employer Name": "KOCH INDUSTRIES",
+    "11 GroupPlan Number": "7340008",
+    "19 Dentist Name": "DOC1",
+    "20 Dentists Address": "266 Jamaica Street",
+    "21 City State Zip": "Forbes, CT 21598",
+    "22 Phone": "(253)687-9654",
+    "Total Fee": "335.00",
+    "DENTISTS STATEMENT OF ACTUAL CHARGES": "335.00",
+    "DESCRIPTION OF SERVICE Including XRays Prophylaxis Materials Used etcFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY": "Limited Oral Evaluation and Scaling and Root Planing with Local Anesthesia",
+    "Date Service PerformedFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY": "2024-08-29",
+    "Procedure NumberFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY": "D0140",
+    "FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY": "75.00",
+    "AllowanceFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY": "75.00",
+    "Tooth  or letterFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2": "23",
+    "Surfaces or QuadFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2": "LLQ",
+    "DESCRIPTION OF SERVICE Including XRays Prophylaxis Materials Used etcFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2": "Scaling and Root Planing",
+    "Date Service PerformedFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2": "2024-08-29",
+    "Procedure NumberFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2": "D4342",
+    "FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2": "80.00",
+    "AllowanceFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_2": "80.00",
+    "Tooth  or letterFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3": "URQ",
+    "Surfaces or QuadFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3": "URQ",
+    "DESCRIPTION OF SERVICE Including XRays Prophylaxis Materials Used etcFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3": "Scaling and Root Planing (Full Quadrant)",
+    "Date Service PerformedFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3": "2024-08-29",
+    "Procedure NumberFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3": "D4341",
+    "FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3": "150.00",
+    "AllowanceFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_3": "150.00",
+    "DESCRIPTION OF SERVICE Including XRays Prophylaxis Materials Used etcFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_4": "Local Anesthesia",
+    "Date Service PerformedFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_4": "2024-08-29",
+    "Procedure NumberFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_4": "D9215",
+    "FeeFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_4": "30.00",
+    "AllowanceFACIAL LINGUAL LINGUAL UPPER LOWER PRIMARY_4": "30.00",
+    "7 Subscribers Mailing Address": "N/A",
+    "13 Policy Number": "N/A",
+    "15 ID Number": "N/A",
+    "Insurance Company": "DELTA DENTAL",
+    "Dual Coverage No": "Yes",
+    "Signature of above insured": "N/A",
+    "Facility No": "N/A",
+    "23 Date Treatment Series Began": "2024-08-29",
+    "Tax ID to be used for Tax reporting": "N/A"
 }
+
 pdf_path = "./claimform_deltacare.pdf"
 output_pdf = "filled_claimform_deltacare.pdf"
 
